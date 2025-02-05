@@ -25,12 +25,27 @@ function bestellverwaltung() {
   const produktNummer = questionInt(
     "Bitte geben Sie die Nummer des gewünschten Produkts ein: "
   );
-  if (!produkte.hasOwnProperty(produktNummer)) {
-    console.log("❌ Ungültige Produktnummer!");
-    return;
+
+  let produktname, preis;
+
+  switch (produktNummer) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+      [produktname, preis] = produkte[produktNummer];
+      break;
+    default:
+      console.log("❌ Ungültige Produktnummer!");
+      return;
   }
 
-  const [produktname, preis] = produkte[produktNummer];
   const anzahl = questionInt(
     `Wie viele Einheiten von ${produktname} möchten Sie kaufen? `
   );
@@ -38,7 +53,12 @@ function bestellverwaltung() {
   if (anzahl <= 0) {
     console.log("❌ Die Menge muss größer als 0 sein!");
   } else {
-    const gesamtpreis = anzahl * preis;
+    let gesamtpreis = anzahl * preis;
+    if (gesamtpreis > 10) {
+      const rabatt = gesamtpreis * 0.1;
+      gesamtpreis -= rabatt;
+      console.log("🎉 Glückwunsch, Sie erhalten 10% Rabatt auf Ihren Einkauf!");
+    }
     console.log(
       `✅ ${anzahl}x ${produktname} kostet insgesamt ${gesamtpreis.toFixed(
         2
